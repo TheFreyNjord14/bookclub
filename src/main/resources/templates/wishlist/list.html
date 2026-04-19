@@ -11,6 +11,8 @@
               crossorigin="anonymous">
     </head>
     <body>
+        <div th:insert="~{fragments/header :: header}"></div>
+
         <div th:fragment="list">
             <div class="container mt-5 text-center">
                 <h1 class="mb-4">My Wishlist</h1>
@@ -36,5 +38,8 @@
                 </table>
             </div>
         </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+        <div th:replace="~{fragments/scriptFooter :: scriptFooter}"></div>
     </body>
 </html>
