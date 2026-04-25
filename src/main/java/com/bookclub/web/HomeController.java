@@ -7,12 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.bookclub.model.Book;
 import com.bookclub.service.impl.MemBookDao;
 
 
 @Controller
+@EnableWebMvc
 @RequestMapping("/")
 public class HomeController {
 
@@ -43,12 +45,9 @@ public class HomeController {
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public String getMonthlyBook(@PathVariable("id") String id, Model model) {
         String isbn = id;
-        System.out.println(id);
 
         MemBookDao bookDao = new MemBookDao();
         Book book = bookDao.find(isbn);
-
-        System.out.println(book.toString());
 
         model.addAttribute("book", book);
         return "monthly-books/view";
