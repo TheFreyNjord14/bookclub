@@ -25,15 +25,20 @@
                 </div>
             </div>
 
-            <div class="col" th:each="book : ${books}">
-                <p class="card-text">
+            <div class="card mb-4" style="display: inline-flex; min-width: 33%;" th:each="book : ${books}">
+                <div class="card-body">
+                    <p class="card-text">
                     <span th:text="${book.getTitle()}"></span>
                     <br />
-                    <small class="text-muted"><em th:text="${book.getDescription()}"></em></small>
-                </p>
-
-                 <div class="btn-group">
-                    <a href="#" th:href="@{/{id}(id=${book.getIsbn()})}" class="btn btn-sm btn-outline-secondary">View</a>
+                    <small class="text-muted">
+                        <em th:text="${book.getIsbn()}"></em>
+                    </small>
+                    </p>
+                    
+                    <div class="btn-group">
+                        <a href="#" th:href="@{/{id}(id=${book.getIsbn()})}" class="btn btn-sm btn-outline-secondary">View</a>
+                        <a href="#" th:href="${book.getInfoUrl()}" class="btn btn-sm btn-outline-secondary" target="_blank">Web Link</a>
+                    </div>
                 </div>
             </div>
 

@@ -17,14 +17,13 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title>" th:text="${book.getTitle()}">Book Title</h5>
-                    <p class="card-text" th:text="${book.getIsbn()}">ISBN</p>
                     <p class="card-text" th:text="${book.getDescription()}">Book Description</p>
                     <strong class="card-text">Pages: </strong>
                     <p class="card-text" th:text="${book.getNumOfPages()}">Number of Pages</p>
-                    <strong class="card-text">Authors: </strong>
-                    <ul class="card-text" th:each="author : ${book.getAuthors()}">
-                        <li class="card-text" th:text="${author}"></li>
-                    </ul>
+                    <strong class="card-text">Web Link:</strong>
+                    <p class="card-text">
+                        <a href="#" th:href="${book.getInfoUrl()}" th:text="${book.getInfoUrl()}"></a>
+                    </p>
                 </div>
             </div>
             <br />
