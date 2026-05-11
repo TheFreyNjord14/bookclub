@@ -33,10 +33,12 @@ public class WishlistController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addWishlistItem(@Valid WishlistItem wishlistItem, BindingResult bindingResult) {
+    public String addWishlistItem(@Valid WishlistItem wishlistItem, BindingResult bindingResult, Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return "wishlist/new";
         }
+
+        wishlistItem.setUsername(authentication.getName());
 
         wishlistDao.add(wishlistItem);
 
@@ -46,20 +48,21 @@ public class WishlistController {
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public String showWishlistItem(@PathVariable String id, Model model) {
         WishlistItem wishlistItem = wishlistDao.find(id);
-
+        
         model.addAttribute("wishlistItem", wishlistItem);
 
         return "wishlist/view";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/update")
+    @RequestMapping(method = RequestMethod.POST, path = "/update")
     public String updateWishlistItem(@Valid WishlistItem wishlistItem, BindingResult bindingResult, Authentication authentication)
     {
+
         wishlistItem.setUsername(authentication.getName());
 
         if (bindingResult.hasErrors())
         {
-            return "wishlist/view";
+            return "wishlist/view/";
         }
 
         wishlistDao.update(wishlistItem);
@@ -67,7 +70,7 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/remove")
+    @RequestMapping(method = RequestMethod.GET, path = "/remove/{id}")
     public String removeWishlistItem(@PathVariable String id)
     {
         wishlistDao.remove(id);

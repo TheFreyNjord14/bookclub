@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.bookclub.model.WishlistItem;
@@ -33,29 +34,32 @@ public class MongoWishlistDao implements WishlistDao {
 
     @Override
     public void update(WishlistItem entity) {
-        WishlistItem wishlistItem = mongoTemplate.findById(entity.getId(), WishlistItem.class);
+        Query query = new Query();
 
-        if (wishlistItem != null) {
-            wishlistItem.setIsbn(entity.getIsbn());
-            wishlistItem.setTitle(entity.getTitle());
-            wishlistItem.setUsername(entity.getUsername());
+        query.addCriteria(Criteria.where("_id").is(entity.getId()));
 
-            mongoTemplate.save(wishlistItem);
-        }
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + entity.getId());
+        Update update = new Update();
+        update.set("isbn", entity.getIsbn());
+        update.set("title", entity.getTitle());
+        update.set("username", entity.getUsername());
+        mongoTemplate.findAndModify(query, update, WishlistItem.class);
     }
 
     @Override
-    public boolean remove(String key) {
+    public void remove(String key) {
         Query query = new Query();
 
-        query.addCriteria(Criteria.where("id").is(key));
+        query.addCriteria(Criteria.where("_id").is(key));
 
-        return !mongoTemplate.find(query, WishlistItem.class).isEmpty();
+        mongoTemplate.remove(query, WishlistItem.class);
     }
 
     @Override
     public WishlistItem find(String key) {
-        return null;
+        WishlistItem wishlistItem = mongoTemplate.findById(key, WishlistItem.class);
+        wishlistItem.setId(key);
+        return wishlistItem;
     }
 
 }
