@@ -31,7 +31,7 @@
                 let tableString = '<table class="table"><tr><th>Title</th><th>ISBN</th><th>Functions</th></tr>';
                 
                 for (let book of books) {
-                    tableString += '<tr><td>' + book.title + '</td><td>' + book.isbn + '</td><td style="display: inline-block; white-space: nowrap;"><a href="/wishlist/edit">Edit</a> | <a href="/wishlist/delete">Delete</a></td></tr>';
+                    tableString += '<tr><td>' + book.title + '</td><td>' + book.isbn + '</td><td style="display: inline-block; white-space: nowrap;"><a href="/wishlist/${book.id}" th:href="/wishlist/${book.id}">Edit</a> | <a href="/wishlist/remove/${book.id}" th:href="/wishlist/remove/${book.id}">Delete</a></td></tr>';
                 }
 
                 tableString += '</table>';

@@ -18,6 +18,8 @@ public class WishlistItem {
     @NotEmpty(message = "Title is a required field")
     private String title;
 
+    private String username;
+
     public WishlistItem() {}
 
     public WishlistItem(String isbn, String title) {
@@ -50,8 +52,18 @@ public class WishlistItem {
         this.id = id;
     }
 
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
-        return "WishlistItem{id=" + id + ", isbn=" + isbn + ", title=" + title + '}';
+        return "WishlistItem{id=" + id + ", isbn=" + isbn + ", title=" + title + ", username=" + username + "}";
     }
 }
