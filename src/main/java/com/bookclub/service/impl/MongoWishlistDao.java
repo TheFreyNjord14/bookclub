@@ -14,7 +14,7 @@ import com.bookclub.service.dao.WishlistDao;
 
 @Repository("wishlistDao")
 public class MongoWishlistDao implements WishlistDao {
-    
+
     @Autowired
     private MongoTemplate mongoTemplate;
 

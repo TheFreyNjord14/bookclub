@@ -21,16 +21,18 @@ public class RestBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> list() {
-        String isbnString = "ISBN:9780593099322,ISBN:9780261102361,ISBN:9780261102378,ISBN:9780590302715,ISBN:9780316769532";
+    public List<Book> list(String key) {
 
-        Object doc = getBooksDoc(isbnString);
+        Object doc = getBooksDoc(key);
 
         List<Book> books = new ArrayList<Book>();
 
         List<String> isbns = JsonPath.read(doc, "$..bib_key");
+        System.out.println(isbns + "\n");
         List<String> titles = JsonPath.read(doc, "$..title");
+        System.out.println(titles + "\n");
         List<String> infoUrls = JsonPath.read(doc, "$..info_url");
+        System.out.println(infoUrls + "\n");
 
         for (int index = 0; index < titles.size(); index++) {
             books.add(new Book(isbns.get(index), titles.get(index), "", infoUrls.get(index), 0));
@@ -60,6 +62,8 @@ public class RestBookDao implements BookDao {
         );
 
         String jsonBooklist = response.getBody();
+
+        System.out.println(jsonBooklist + "\n");
 
         return Configuration.defaultConfiguration().jsonProvider().parse(jsonBooklist);
 
